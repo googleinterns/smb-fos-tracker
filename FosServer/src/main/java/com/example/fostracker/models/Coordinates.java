@@ -1,9 +1,5 @@
 package com.example.fostracker.models;
 
-/**
- * Serves as a model for coordinates (stores latitudes and longitudes)
- * Will be used later to store location of an agent or verification
- */
 public class Coordinates {
     double latitude;
     double longitude;

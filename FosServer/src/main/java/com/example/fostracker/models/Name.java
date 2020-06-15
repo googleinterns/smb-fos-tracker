@@ -1,8 +1,5 @@
 package com.example.fostracker.models;
 
-/**
- * Serves as a model for names so that Store and Agent classes are simplified and redundancy is avoided
- */
 public class Name {
     String firstName;
     String middleName;

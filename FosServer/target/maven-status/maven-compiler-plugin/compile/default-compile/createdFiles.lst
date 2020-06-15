@@ -1,0 +1,16 @@
+com/example/fostracker/models/Store.class
+com/example/fostracker/servlets/HelloAppEngine.class
+com/example/fostracker/servlets/UpdateAgentLocation$EmailCoordinates.class
+com/example/fostracker/servlets/SpannerClient.class
+com/example/fostracker/servlets/SpannerTasks$1.class
+com/example/fostracker/servlets/UpdateAgentLocation.class
+com/example/fostracker/servlets/GetAgentServlet.class
+com/example/fostracker/models/Agent.class
+com/example/fostracker/models/Address.class
+com/example/fostracker/servlets/NumberofMerchantsVerified.class
+com/example/fostracker/servlets/SpannerTasks.class
+com/example/fostracker/models/Name.class
+com/example/fostracker/models/Coordinates.class
+com/example/fostracker/models/Verification.class
+com/example/fostracker/servlets/SpannerTasksServlet.class
+com/example/fostracker/models/Email.class

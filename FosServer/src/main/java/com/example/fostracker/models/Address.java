@@ -1,8 +1,5 @@
 package com.example.fostracker.models;
 
-/**
- * Serves as a model for address objects that will be used in Store.java to store address details of a Store
- */
 public class Address {
     String street;
     String area;
