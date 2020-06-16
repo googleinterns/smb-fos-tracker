@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Receives email and current latitude and longitude of agent as post request. It passes these values
@@ -23,19 +24,22 @@ public class UpdateAgentLocation extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
 
-        String jsonString = req.getReader().readLine();
+        String jsonString = request.getReader().readLine();
         Gson gson = new Gson();
         EmailCoordinates emailCoordinates = gson.fromJson(jsonString, EmailCoordinates.class);
 
         try {
-            SpannerTasks task = new SpannerTasks();
-            task.updateAgentLocation(emailCoordinates.email, emailCoordinates.latitude, emailCoordinates.longitude, resp);
+            long numberOfRowsChanged = SpannerQueryFunctions.updateAgentLocation(emailCoordinates.email, emailCoordinates.latitude, emailCoordinates.longitude);
+            response.setContentType("text");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(Long.toString(numberOfRowsChanged));
+
 
         } catch (Exception e) {
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 }
