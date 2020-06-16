@@ -82,19 +82,19 @@ class _QrScanState extends State<QrScan> {
     String qrcode = await scanner.scan();
     //Use QR code to get store, if store is registered, pass merchant name found, else not found
     Navigator.pop(context);
-    if(qrcode == "73"){      //73 is a hard coded as a valid store QR code currently
+    if (qrcode == "73") {
+      //73 is a hard coded as a valid store QR code currently
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => MerchantFound(name: "Alice Peterson"),
+          builder: (context) => MerchantFound(name: "Alice Peterson"),
         ),
       );
-    }
-    else{
+    } else {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => MerchantNotFound(),
+          builder: (context) => MerchantNotFound(),
         ),
       );
     }

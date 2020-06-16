@@ -134,9 +134,9 @@ class _BusinessDetailsPageOneState extends State<BusinessDetailsPageOne> {
                           if (formValidationKey.currentState.validate()) {
                             List<String> inputNameParts =
                                 ownerNameController.text.split(" ");
-                            String inputFirstName;
-                            String inputLastName;
-                            String inputMiddleName;
+                            String inputFirstName = "";
+                            String inputLastName = "";
+                            String inputMiddleName = "";
                             int i = 0;
                             for (var part in inputNameParts) {
                               i++;

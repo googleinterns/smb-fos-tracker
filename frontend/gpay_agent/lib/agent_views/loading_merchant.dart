@@ -3,18 +3,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
-class LoadingMerchant extends StatefulWidget{
+class LoadingMerchant extends StatefulWidget {
   @override
   LoadingMerchantState createState() => LoadingMerchantState();
 }
 
 /// Builds a loading circle widget that shows on screen while
 /// fetching complete registered information of store in database.
-class LoadingMerchantState extends State<LoadingMerchant>{
+class LoadingMerchantState extends State<LoadingMerchant> {
   final slider = SleekCircularSlider(
       appearance: CircularSliderAppearance(
-        spinnerMode: true,
-      ));
+    spinnerMode: true,
+  ));
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,10 @@ class LoadingMerchantState extends State<LoadingMerchant>{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextWidget(name: "Starting Verification..",color: Colors.black,),
+            TextWidget(
+              name: "Starting Verification..",
+              color: Colors.black,
+            ),
             slider,
           ],
         ),
