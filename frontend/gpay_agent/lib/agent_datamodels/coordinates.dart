@@ -4,9 +4,9 @@ class MapCoordinates{
   double longitude;
 
   MapCoordinates(
-      this.latitude,
-      this.longitude
-      );
+    this.latitude,
+    this.longitude
+  );
 
   Map<String, dynamic> toJson() =>
       {
@@ -15,9 +15,16 @@ class MapCoordinates{
       };
 
   factory MapCoordinates.fromJson(Map<String, dynamic> json) {
-    return MapCoordinates(
+    return new MapCoordinates(
       json['latitude'] as double,
       json['longitude'] as double,
     );
   }
+
+//  factory MapCoordinates.fromJson(Map<String, dynamic> json) {
+//    return MapCoordinates(
+//      latitude: json['latitude'] ,
+//      longitude: json['longitude']
+//    );
+//  }
 }

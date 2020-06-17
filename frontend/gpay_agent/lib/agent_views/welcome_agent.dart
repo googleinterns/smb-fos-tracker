@@ -73,7 +73,7 @@ class _WelcomeAgentState extends State<WelcomeAgent>{
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar("Welcome "+globals.agent.getName(), Colors.white),
+      appBar: CustomAppBar("Welcome" + globals.agent.getName(), Colors.white), // remember to change name
         body: ListView(
           padding: const EdgeInsets.all(8.0),
           children: <Widget>[

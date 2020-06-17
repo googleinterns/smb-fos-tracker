@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:typed_data';
+import 'package:agent_app/agent_datamodels/store.dart';
 import 'package:agent_app/agent_views/merchant_found_notfound.dart';
 import 'package:agent_app/custom_widgets/app_bar.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/painting.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:agent_app/globals.dart' as globals;
 import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:http/http.dart' as http;
 
 class FetchStore extends StatefulWidget {
   FetchStoreState createState() => FetchStoreState();
@@ -34,6 +37,7 @@ class FetchStoreState extends State<FetchStore> {
     );
   }
 
+  /// Builds portrait view.
   Widget _buildFetchStorePortraitView() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -49,6 +53,7 @@ class FetchStoreState extends State<FetchStore> {
     );
   }
 
+  /// Builds landscape view.
   Widget _buildFetchStoreLandScapeView() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -64,6 +69,9 @@ class FetchStoreState extends State<FetchStore> {
     );
   }
 
+  /// Fetches store details using phone number of store.
+  /// If store number is registered in database, it calls [MerchantFound]
+  /// interface otherwise it calls [MerchantNotFound] interface.
   Widget _buildPhoneChild() {
     return Expanded(
       flex: 1,
@@ -98,7 +106,6 @@ class FetchStoreState extends State<FetchStore> {
                     textAlign: TextAlign.left,
                   ),
                 ),
-
                 Expanded(
                   flex: 1,
                   child: Container(
@@ -110,10 +117,6 @@ class FetchStoreState extends State<FetchStore> {
                     ),
                   ),
                 ),
-
-                /// Fetches store details using phone number of store.
-                /// If store number is registered in database, it calls [MerchantFound]
-                /// interface otherwise it calls [MerchantNotFound] interface.
                 Expanded(
                   flex: 1,
                   child: Center(
@@ -121,13 +124,17 @@ class FetchStoreState extends State<FetchStore> {
                       minWidth: 200,
                       height: 50,
                       child: FlatButton(
-                        onPressed: () {
-                          if (num == "+919999999999") {
+                        textColor: Colors.white,
+                        color: Colors.blue,
+                        child: new Text("Submit"),
+                        onPressed: () async {
+                          await Store.fetchStore(num.substring(3));
+                          if (globals.isStorePresent) {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => MerchantFound(
-                                  name: "Alice Peterson",
+                                  name: globals.store.ownerName.getName(),
                                 ),
                               ),
                             );
@@ -140,9 +147,6 @@ class FetchStoreState extends State<FetchStore> {
                             );
                           }
                         },
-                        textColor: Colors.white,
-                        color: Colors.blue,
-                        child: new Text("Submit"),
                       ),
                     ),
                   ),
@@ -186,7 +190,7 @@ class FetchStoreState extends State<FetchStore> {
                       "QR Code is generated when the merchant registers the store using merchant app",
                       style: TextStyle(
 //                        fontSize: 17,
-                      ),
+                          ),
                     ),
                   )),
               /*SizedBox(
@@ -214,152 +218,6 @@ class FetchStoreState extends State<FetchStore> {
     );
   }
 
-  Widget _buildFetchStoreView() {
-    return ListView(
-      padding: const EdgeInsets.all(8.0),
-      children: <Widget>[
-        Center(
-          child: Text(
-            "FETCH STORE DETAILS FOR VERIFICATION",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Text("Method 1"),
-        Container(
-          padding: EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey),
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "Phone Number",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Text(
-                  "Enter the phone number with which the merchant registered the store.",
-                  textAlign: TextAlign.left,
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Container(
-                  child: InternationalPhoneNumberInput(
-                    onInputChanged: (PhoneNumber number) {
-                      num = (number.phoneNumber).toString();
-                    },
-                    initialValue: number,
-                  ),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-
-                /// Fetches store details using phone number of store.
-                /// If store number is registered in database, it calls [MerchantFound]
-                /// interface otherwise it calls [MerchantNotFound] interface.
-                Center(
-                  child: ButtonTheme(
-                    minWidth: 200,
-                    height: 50,
-                    child: FlatButton(
-                      onPressed: () {
-                        if (num == "+919999999999") {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MerchantFound(
-                                name: "Alice Peterson",
-                              ),
-                            ),
-                          );
-                        } else {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MerchantNotFound(),
-                            ),
-                          );
-                        }
-                      },
-                      textColor: Colors.white,
-                      color: Colors.blue,
-                      child: new Text("Submit"),
-                    ),
-                  ),
-                ),
-              ]),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Text("Method 2"),
-
-        /// Calls [_scan] function to scan QR code of store
-        Container(
-          padding: EdgeInsets.all(13),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey),
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "Scan QR code",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Text(
-                  "QR Code is generated when the merchant registers the store using merchant app",
-                ),
-                SizedBox(
-                  child: Image.memory(bytes),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Center(
-                  child: ButtonTheme(
-                    minWidth: 200,
-                    height: 50,
-                    child: FlatButton(
-                      onPressed: _scan,
-                      textColor: Colors.white,
-                      color: Colors.blue,
-                      child: new Text("Scan QR Code"),
-                    ),
-                  ),
-                ),
-              ]),
-        ),
-        SizedBox(
-          height: 30,
-        ),
-        Image.asset(
-          "assets/agent_beginning_images/GPay_logo_rectangle.png",
-          height: 40,
-        )
-      ],
-    );
-  }
-
   /// Fetches text of QR code by calling scan() API of qr_scan plugin.
   /// Navigate to [MerchantFound] interface if [qrcode] is registered with any store,
   /// else navigate to [MerchantNotFound] interface.
@@ -382,6 +240,32 @@ class FetchStoreState extends State<FetchStore> {
           builder: (context) => MerchantNotFound(),
         ),
       );
+    }
+  }
+
+  /// Fetches store from the spanner database.
+  Future<Null> fetchStore(String phone) async {
+    print('started' + phone);
+    var response = await http.post(
+        "https://fos-tracker-278709.an.r.appspot.com/store/phone",
+        body: jsonEncode(<String, String>{"storePhone": phone}));
+    if (response.statusCode == 200) {
+      print('found number');
+      try {
+        LineSplitter lineSplitter = new LineSplitter();
+        List<String> lines = lineSplitter.convert(response.body);
+        String jsonString = lines[0];
+        print(jsonString);
+        globals.isStorePresent = true;
+        print(json.decode(jsonString));
+        globals.store = Store.fromJson(jsonDecode(jsonString));
+        print('returned data');
+      } catch (e) {
+        print("error");
+      }
+    } else {
+      print('number not found');
+      globals.isStorePresent = false;
     }
   }
 }

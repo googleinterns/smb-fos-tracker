@@ -47,13 +47,13 @@ class MerchantNotFound extends StatelessWidget{
 /// Builds UI if store searched for is found in database.
 class MerchantFound extends StatelessWidget{
   MerchantFound({this.name});
-  String name;
+  String name = globals.store.ownerName.getName();
   int milliseconds;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(globals.agent.getName(), Colors.white),
+      appBar: CustomAppBar(globals.agent.getName(), Colors.white), //change this
       body: ListView(
         children: <Widget>[
             SizedBox(height: 10,),
@@ -61,7 +61,7 @@ class MerchantFound extends StatelessWidget{
             SizedBox(height: 10,),
             PersonalDetailsTextBox(title: "Merchant Name", value: name, icon: Icon(Icons.face),),
             SizedBox(height: 10,),
-             PersonalDetailsTextBox(title: "Store Phone", value: "9999999999", icon: Icon(Icons.phone),),
+             PersonalDetailsTextBox(title: "Store Phone", value: globals.store.phone, icon: Icon(Icons.phone),),
             SizedBox(height: 10,),
             Image.asset(
                 "assets/agent_beginning_images/tick.gif",

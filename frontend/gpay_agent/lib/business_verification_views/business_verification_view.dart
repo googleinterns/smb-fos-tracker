@@ -3,7 +3,7 @@ import 'package:agent_app/business_verification_data/Coordinates.dart';
 import 'package:agent_app/business_verification_data/verification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:agent_app/business_verification_data/globals.dart' as globals;
+import 'package:agent_app/globals.dart' as globals;
 import 'package:agent_app/business_verification_views/business_verification_menu_items.dart';
 import 'package:agent_app/business_verification_views/business_verification_success_view.dart';
 import 'package:agent_app/business_verification_views/business_verification_failure_view.dart';
@@ -134,9 +134,9 @@ class _VerificationViewState extends State<VerificationView> {
       snap: false,
       flexibleSpace: FlexibleSpaceBar(
         title: Text(
-            globals.merchantName,
+            globals.store.ownerName.getName(),
           style: GoogleFonts.montserrat(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 16,
           ),
         ),
@@ -304,8 +304,8 @@ class _VerificationViewState extends State<VerificationView> {
     globals.newVerification = new Verification();
 
     globals.newVerification.status = status;
-    globals.newVerification.storePhone = "0987645321";
-    globals.newVerification.agentEmail = "vahinim@google.com";
+    globals.newVerification.storePhone = globals.store.phone;
+    globals.newVerification.agentEmail = globals.store.email;
 
     globals.newVerification.verificationCoordinates = new Coordinates();
     _setCurrentLocationCoordinates();
@@ -444,11 +444,11 @@ class _VerificationViewState extends State<VerificationView> {
   String _getFieldValue(headerName name){
     switch(name){
       case headerName.merchant_details:
-        return globals.merchantName;
+        return globals.store.ownerName.getName();
       case headerName.business_details:
-        return globals.address;
+        return globals.store.storeAddress.getAddress();
       case headerName.business_phone:
-        return globals.phone;
+        return globals.store.phone;
     }
   }
 
