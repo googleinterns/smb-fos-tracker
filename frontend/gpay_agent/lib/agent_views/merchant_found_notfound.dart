@@ -2,8 +2,8 @@ import 'package:agent_app/agent_datamodels/text_widget.dart';
 import 'package:agent_app/custom_widgets/personal_details_textbox.dart';
 import 'package:agent_app/custom_widgets/app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:agent_app/business_verification_views/business_registration_details_view.dart';
-import 'package:agent_app/agent_datamodels/globals.dart' as globals;
+import 'package:agent_app/business_verification_views/business_verification_view.dart';
+import 'package:agent_app/globals.dart' as globals;
 
 /// Builds UI if store searched for is not found in database.
 class MerchantNotFound extends StatelessWidget{
@@ -77,7 +77,7 @@ class MerchantFound extends StatelessWidget{
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MerchantHomeView(),
+                      builder: (context) => VerificationView(),
                     ),
                   );
                 },

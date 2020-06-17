@@ -1,6 +1,7 @@
 import 'package:agent_app/agent_views/login_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(AgentApp());
@@ -13,6 +14,9 @@ class AgentApp extends StatelessWidget {
     return MaterialApp(
       title: 'Welcome Agent',
       theme: ThemeData(
+        textTheme: GoogleFonts.montserratTextTheme(
+          Theme.of(context).textTheme,
+        ),
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),

@@ -15,9 +15,9 @@ import 'package:http/http.dart' as http;
 ///
 /// FOS Agent Verifies the Merchant by checking whether Merchant details like address,
 /// phone are correct or not.
-class MyHomePage extends StatefulWidget {
+class VerificationView extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _VerificationViewState createState() => _VerificationViewState();
 }
 
 /// This enum type is used to select icon for header items.
@@ -42,7 +42,7 @@ enum headerName{
   business_phone
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _VerificationViewState extends State<VerificationView> {
 
   /// [isNameCorrect] stores whether Merchant name displayed is correct or not.
   bool isNameCorrect = false;
@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
   double buttonHeight = 50;
 
   /// [buttonTextSize] defines the size of text on buttons.
-  double buttonTextSize = 14;
+  double buttonTextSize = 17;
 
   /// [itemHeight] defines the height of item under header.
   double itemHeight = 100;
@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
   double itemTextSize = 12;
 
   /// [appbarHeight] defines the expanded appbar height.
-  double appbarHeight = 200;
+  double appbarHeight = 150;
 
   /// Builds the main scaffold of verification view.
   ///
@@ -127,6 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
   SliverAppBar _buildSilverAppBar(double height) {
     double expandedHeight = height;
     return SliverAppBar(
+      backgroundColor: Colors.blue,
       expandedHeight: expandedHeight,
       floating: false,
       pinned: true,
@@ -134,6 +135,10 @@ class _MyHomePageState extends State<MyHomePage> {
       flexibleSpace: FlexibleSpaceBar(
         title: Text(
             globals.merchantName,
+          style: GoogleFonts.montserrat(
+            color: Colors.black,
+            fontSize: 16,
+          ),
         ),
         centerTitle: true,
       ),
@@ -146,7 +151,15 @@ class _MyHomePageState extends State<MyHomePage> {
           Navigator.pop(context);
         },
       ),
-      actions: <Widget>[_buildPopUpMenu()],
+      actions: <Widget>[
+          /*Theme(
+              data: Theme.of(context).copyWith(
+                cardColor: Colors.white,
+              ),
+          child:*/
+          _buildPopUpMenu(),
+//        )
+      ]
     );
   }
 
@@ -197,6 +210,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontSize: textSize,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54,
                   )),
             ),
           ],
@@ -216,14 +231,17 @@ class _MyHomePageState extends State<MyHomePage> {
       case iconType.face:
         return Icon(
           Icons.face,
+          color: Colors.black54,
         );
       case iconType.phone:
         return Icon(
           Icons.phone,
+          color: Colors.black54,
         );
       case iconType.store:
         return Icon(
           Icons.store,
+          color: Colors.black54,
         );
     }
   }
@@ -235,11 +253,11 @@ class _MyHomePageState extends State<MyHomePage> {
   /// calls _actonForSelectedVerificationType when pressed on button.
   Widget _buildButtonItem(double height, double textSize,verificationType type) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 6.0),
+      padding: EdgeInsets.fromLTRB(13.0, 6.0, 13.0, 6.0),
       child: Container(
         height: height,
         child: OutlineButton(
-          shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(12.0)),
+          shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(6.0)),
           highlightedBorderColor: Colors.black,
           onPressed: () {
             _actionForSelectedVerificationType(type);
@@ -318,7 +336,6 @@ class _MyHomePageState extends State<MyHomePage> {
         'https://fos-tracker-278709.an.r.appspot.com/verifications/new',
         body: body
     );
-
     if(response.statusCode == 200){
       print('successful insert');
     }else{
@@ -359,7 +376,7 @@ class _MyHomePageState extends State<MyHomePage> {
   /// Contains text with trailing icons (correct or wrong).
   Widget _buildListItem(double itemHeight, double textSize, headerName name) {
     return Padding(
-        padding: EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 6.0),
+        padding: EdgeInsets.fromLTRB(13.0, 6.0, 13.0, 6.0),
         child: Container(
           height: itemHeight,
           child: Row(
@@ -382,8 +399,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       Expanded(
                           flex: 1,
-                          child: Text(
-                            _getFieldValue(name),
+                          child:Padding(
+                            padding: EdgeInsets.only(top: 5),
+                            child:Align(
+                              alignment: Alignment.topCenter,
+                              child: Text(
+                                _getFieldValue(name),
+                              )
+                            )
                           )
                       )
                     ],
@@ -399,7 +422,7 @@ class _MyHomePageState extends State<MyHomePage> {
             border: Border.all(
               color: Colors.grey,
             ),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(6),
           ),
         )
     );

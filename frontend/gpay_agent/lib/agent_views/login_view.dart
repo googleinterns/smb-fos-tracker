@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:agent_app/agent_datamodels/globals.dart' as globals;
+import 'package:agent_app/globals.dart' as globals;
 import 'package:agent_app/agent_datamodels/agent.dart';
 import 'package:agent_app/agent_views/welcome_agent.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,8 +15,9 @@ class LoginView extends StatefulWidget{
 /// Creates the widgets that are visible at the running state of
 /// login view interface.[alert_message] are printing on app screen when
 /// agent cannot be authenticated.
-class LoginViewState extends State<LoginView>{
+class LoginViewState extends State<LoginView> {
   String alert_message = "";
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,11 +26,11 @@ class LoginViewState extends State<LoginView>{
           body: Center(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children:<Widget>[
+                children: <Widget>[
                   Image.asset(
-                    "assets/agent_beginning_images/GPay_logo.png",
-                    width: 200,
-                    height: 200,
+                    "assets/agent_beginning_images/GPay_logo_rectangle.png",
+//                  width: 100,
+                    height: 40,
                   ),
                   Text(
                     "Welcome to Google Pay Agent",
@@ -82,14 +83,21 @@ class LoginViewState extends State<LoginView>{
     try {
       await (globals.googleSignIn).signIn();
       String email = globals.googleSignIn.currentUser.email;
+
       await checkRegisteredinDB(email);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => WelcomeAgent(),
+          )
+      );
     }
     catch (err) {
       print(err);
     }
   }
 
-  Future<Agent> checkRegisteredinDB(String email) async {
+   Future<Agent> checkRegisteredinDB(String email) async {
     final http.Response response = await http.post(
       'https://fos-tracker-278709.an.r.appspot.com/get_agent',
       headers:<String,String>{
@@ -127,28 +135,30 @@ class LoginViewState extends State<LoginView>{
       });
     }
   }
-}
 
-/// Fetches the number of merchants verified by the agent signed in [agent]
-/// using google spanner APIs.
-Future<int> getMerchantsVerified() async{
-  String email = globals.googleSignIn.currentUser.email;
-  int num = 0;
-  final http.Response response = await http.post(
-    'https://fos-tracker-278709.an.r.appspot.com/number_of_merchants_verified',
-    headers:<String,String>{
-      'Content-Type':'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      "email": email,
-    }),
-  );
-  if (response.statusCode==200){
-    Map<String, dynamic> jsonMap = jsonDecode(response.body);
-    num = jsonMap["number_of_merchants"];
-    return num;
+
+  /// Fetches the number of merchants verified by the agent signed in [agent]
+  /// using google spanner APIs.
+  Future<int> getMerchantsVerified() async {
+    String email = globals.googleSignIn.currentUser.email;
+    int num = 0;
+    final http.Response response = await http.post(
+      'https://fos-tracker-278709.an.r.appspot.com/number_of_merchants_verified',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "email": email,
+      }),
+    );
+    if (response.statusCode == 200) {
+      Map<String, dynamic> jsonMap = jsonDecode(response.body);
+      num = jsonMap["number_of_merchants"];
+      return num;
+    }
+    else {
+      return 0;
+    }
   }
-  else {
-    return 0;
-  }
+
 }
