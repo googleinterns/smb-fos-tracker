@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-
-import 'main_view.dart';
+import 'package:fos_tracker/menu.dart';
 
 void main() {
   runApp(FosTracker());
 }
+
+/// Class for the root stateless widget of application
 
 class FosTracker extends StatelessWidget {
   @override
@@ -16,7 +17,7 @@ class FosTracker extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MainView(),
+      home: MenuView(),
     );
   }
 }
