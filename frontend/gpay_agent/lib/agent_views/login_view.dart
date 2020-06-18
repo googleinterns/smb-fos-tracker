@@ -82,9 +82,9 @@ class LoginViewState extends State<LoginView> {
   _login() async {
     try {
       await (globals.googleSignIn).signIn();
-      String email = globals.googleSignIn.currentUser.email;
+//      String email = globals.googleSignIn.currentUser.email;
 
-      await checkRegisteredinDB(email);
+//      await checkRegisteredinDB(email);
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -142,7 +142,7 @@ class LoginViewState extends State<LoginView> {
   Future<int> getMerchantsVerified() async {
     String email = globals.googleSignIn.currentUser.email;
     int num = 0;
-    final http.Response response = await http.post(
+    /*final http.Response response = await http.post(
       'https://fos-tracker-278709.an.r.appspot.com/number_of_merchants_verified',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -156,9 +156,9 @@ class LoginViewState extends State<LoginView> {
       num = jsonMap["number_of_merchants"];
       return num;
     }
-    else {
+    else {*/
       return 0;
-    }
+//    }
   }
 
 }

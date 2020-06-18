@@ -10,6 +10,7 @@ import 'package:agent_app/business_verification_views/business_verification_fail
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:agent_app/agent_views/welcome_agent.dart';
 
 /// Displays Verification home page for a Merchant that FOS Agent verifies.
 ///
@@ -284,18 +285,23 @@ class _VerificationViewState extends State<VerificationView> {
         _showVerifyMerchantDialog();
         break;
       case verificationType.cancel:
-        _sendVerificationData(globals.verificationStatus.not_verified);
-        _verificationFailed();
+        _returnToHome();
         break;
       case verificationType.revisit:
         _sendVerificationData(globals.verificationStatus.needs_revisit);
-        _verificationFailed();
+        _returnToHome();
         break;
       case verificationType.store_does_not_exist:
         _sendVerificationData(globals.verificationStatus.failure);
         _verificationFailed();
         break;
     }
+  }
+
+  /// Return to home page.
+  void _returnToHome(){
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => WelcomeAgent()));
   }
 
   /// Sets verification data that is to be sent to server.
@@ -305,7 +311,7 @@ class _VerificationViewState extends State<VerificationView> {
 
     globals.newVerification.status = status;
     globals.newVerification.storePhone = globals.store.phone;
-    globals.newVerification.agentEmail = globals.store.email;
+    globals.newVerification.agentEmail = globals.agent.AgentEmail;
 
     globals.newVerification.verificationCoordinates = new Coordinates();
     _setCurrentLocationCoordinates();

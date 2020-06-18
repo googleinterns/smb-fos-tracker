@@ -1,14 +1,13 @@
-import 'dart:convert';
 import 'dart:typed_data';
+import 'package:agent_app/list_of_stores_with_directions/main_directions.dart';
 import 'package:agent_app/agent_datamodels/store.dart';
 import 'package:agent_app/agent_views/merchant_found_notfound.dart';
 import 'package:agent_app/custom_widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:agent_app/globals.dart' as globals;
 import 'package:qrscan/qrscan.dart' as scanner;
-import 'package:http/http.dart' as http;
+import 'package:agent_app/globals.dart' as globals;
 
 class FetchStore extends StatefulWidget {
   FetchStoreState createState() => FetchStoreState();
@@ -35,6 +34,17 @@ class FetchStoreState extends State<FetchStore> {
         }
       }),
     );
+  }
+
+  Widget buildFetchStore(BuildContext context){
+//    this.context = context;
+    return OrientationBuilder(builder: (context, orientation) {
+      if (orientation == Orientation.portrait) {
+        return _buildFetchStorePortraitView();
+      } else {
+        return _buildFetchStoreLandScapeView();
+      }
+    });
   }
 
   /// Builds portrait view.
@@ -129,6 +139,10 @@ class FetchStoreState extends State<FetchStore> {
                         child: new Text("Submit"),
                         onPressed: () async {
                           await Store.fetchStore(num.substring(3));
+//                          MyHomePageState().navigateToNextPage();
+                          if(this.context == null){
+                            print('context is null');
+                          }
                           if (globals.isStorePresent) {
                             Navigator.push(
                               context,
@@ -240,32 +254,6 @@ class FetchStoreState extends State<FetchStore> {
           builder: (context) => MerchantNotFound(),
         ),
       );
-    }
-  }
-
-  /// Fetches store from the spanner database.
-  Future<Null> fetchStore(String phone) async {
-    print('started' + phone);
-    var response = await http.post(
-        "https://fos-tracker-278709.an.r.appspot.com/store/phone",
-        body: jsonEncode(<String, String>{"storePhone": phone}));
-    if (response.statusCode == 200) {
-      print('found number');
-      try {
-        LineSplitter lineSplitter = new LineSplitter();
-        List<String> lines = lineSplitter.convert(response.body);
-        String jsonString = lines[0];
-        print(jsonString);
-        globals.isStorePresent = true;
-        print(json.decode(jsonString));
-        globals.store = Store.fromJson(jsonDecode(jsonString));
-        print('returned data');
-      } catch (e) {
-        print("error");
-      }
-    } else {
-      print('number not found');
-      globals.isStorePresent = false;
     }
   }
 }

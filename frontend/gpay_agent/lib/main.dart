@@ -11,7 +11,9 @@ void main() {
 class AgentApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final navigatorKey = GlobalKey<NavigatorState>();
     return MaterialApp(
+      key: navigatorKey,
       title: 'Welcome Agent',
       theme: ThemeData(
         textTheme: GoogleFonts.montserratTextTheme(

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:agent_app/list_of_stores_with_directions/main_directions.dart';
 import 'package:agent_app/agent_views/fetch_store.dart';
 import 'package:agent_app/custom_widgets//app_bar.dart';
 import 'package:agent_app/custom_widgets/personal_details_textbox.dart';
@@ -73,7 +74,7 @@ class _WelcomeAgentState extends State<WelcomeAgent>{
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar("Welcome" + globals.agent.getName(), Colors.white), // remember to change name
+      appBar: CustomAppBar("Welcome " + globals.agent.getName(), Colors.white), // remember to change name
         body: ListView(
           padding: const EdgeInsets.all(8.0),
           children: <Widget>[
@@ -106,7 +107,8 @@ class _WelcomeAgentState extends State<WelcomeAgent>{
                   onPressed: (){Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => FetchStore()
+                        builder: (context) => MyHomePage()
+//                    builder: (context)=>FetchStore()
                     ),
                   );
                   },

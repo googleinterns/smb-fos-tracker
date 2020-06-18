@@ -18,7 +18,7 @@ int merchantsVerifiedbyAgent = 0;
 bool isStorePresent = false;
 
 Agent agent = new Agent(
-'vahinimirididdi@gmail.com',
+'vahinim@google.com',
 new Name("vahini", "", "k"),
 '9490146571',
 '12:00 AM',
