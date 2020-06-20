@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:agent_app/agent_views/welcome_agent.dart';
 
 /// Displays Verification success page.
 class VerificationSuccessView extends StatefulWidget {
@@ -15,6 +16,12 @@ class _VerificationSuccessViewState extends State<VerificationSuccessView> {
         backgroundColor: Colors.white,
         elevation: 0.0,
         bottomOpacity: 0.0,
+        leading: IconButton(
+          icon: Icon(Icons.home,color: Colors.black,),
+          onPressed: () {
+            _returnToHome();
+          },
+        ),
       ),
       body: OrientationBuilder(
         builder: (context, orientation){
@@ -27,6 +34,12 @@ class _VerificationSuccessViewState extends State<VerificationSuccessView> {
         }
       )
     );
+  }
+
+  /// Returns to Home.
+  void _returnToHome(){
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => WelcomeAgent()));
   }
 
   /// Builds success landscape view.

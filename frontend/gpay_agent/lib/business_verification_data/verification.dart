@@ -1,6 +1,5 @@
-
 import 'dart:convert';
-import 'package:agent_app/business_verification_data/globals.dart' as globals;
+import 'package:agent_app/globals.dart' as globals;
 
 import 'package:agent_app/business_verification_data/Coordinates.dart';
 

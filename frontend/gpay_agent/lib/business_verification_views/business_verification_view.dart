@@ -3,13 +3,14 @@ import 'package:agent_app/business_verification_data/Coordinates.dart';
 import 'package:agent_app/business_verification_data/verification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:agent_app/business_verification_data/globals.dart' as globals;
+import 'package:agent_app/globals.dart' as globals;
 import 'package:agent_app/business_verification_views/business_verification_menu_items.dart';
 import 'package:agent_app/business_verification_views/business_verification_success_view.dart';
 import 'package:agent_app/business_verification_views/business_verification_failure_view.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:agent_app/agent_views/welcome_agent.dart';
 
 /// Displays Verification home page for a Merchant that FOS Agent verifies.
 ///
@@ -63,7 +64,7 @@ class _VerificationHomeViewState extends State<VerificationHomeView> {
   double buttonHeight = 50;
 
   /// [buttonTextSize] defines the size of text on buttons.
-  double buttonTextSize = 14;
+  double buttonTextSize = 17;
 
   /// [itemHeight] defines the height of item under header.
   double itemHeight = 100;
@@ -72,7 +73,7 @@ class _VerificationHomeViewState extends State<VerificationHomeView> {
   double itemTextSize = 12;
 
   /// [appbarHeight] defines the expanded appbar height.
-  double appbarHeight = 200;
+  double appbarHeight = 150;
 
   /// Builds the main scaffold of verification view.
   ///
@@ -131,9 +132,14 @@ class _VerificationHomeViewState extends State<VerificationHomeView> {
       floating: false,
       pinned: true,
       snap: false,
+      backgroundColor: Colors.blue,
       flexibleSpace: FlexibleSpaceBar(
         title: Text(
-            globals.merchantName,
+            globals.store.storeName,
+            style: GoogleFonts.montserrat(
+              color: Colors.white,
+              fontSize: 16,
+            ),
         ),
         centerTitle: true,
       ),
@@ -154,7 +160,6 @@ class _VerificationHomeViewState extends State<VerificationHomeView> {
   void choiceAction(String choice) {
     if (choice == VerificationMenuItems.Cancel) {
       //When ever user clicks on discard verification it opens up verification failed
-      //TODO: Need to return to home page after cancelling verification
       _showCancelVerificationDialog();
     }
   }
@@ -196,6 +201,8 @@ class _VerificationHomeViewState extends State<VerificationHomeView> {
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontSize: textSize,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54,
                   )),
             ),
           ],
@@ -215,14 +222,17 @@ class _VerificationHomeViewState extends State<VerificationHomeView> {
       case iconType.face:
         return Icon(
           Icons.face,
+          color: Colors.black54,
         );
       case iconType.phone:
         return Icon(
           Icons.phone,
+          color: Colors.black54,
         );
       case iconType.store:
         return Icon(
           Icons.store,
+          color: Colors.black54,
         );
     }
   }
@@ -238,7 +248,7 @@ class _VerificationHomeViewState extends State<VerificationHomeView> {
       child: Container(
         height: height,
         child: OutlineButton(
-          shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(12.0)),
+          shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(6.0)),
           highlightedBorderColor: Colors.black,
           onPressed: () {
             _actionForSelectedVerificationType(type);
@@ -265,12 +275,11 @@ class _VerificationHomeViewState extends State<VerificationHomeView> {
         _showVerifyMerchantDialog();
         break;
       case verificationType.cancel:
-        _sendVerificationData(globals.verificationStatus.not_verified);
-        _verificationFailed();
+        _returnToHome();
         break;
       case verificationType.revisit:
         _sendVerificationData(globals.verificationStatus.needs_revisit);
-        _verificationFailed();
+        _returnToHome();
         break;
       case verificationType.store_does_not_exist:
         _sendVerificationData(globals.verificationStatus.failure);
@@ -279,14 +288,20 @@ class _VerificationHomeViewState extends State<VerificationHomeView> {
     }
   }
 
+  /// Return to home page.
+  void _returnToHome(){
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => WelcomeAgent()));
+  }
+
   /// Sets verification data that is to be sent to server.
   void _sendVerificationData(globals.verificationStatus status){
 
     globals.newVerification = new Verification();
 
     globals.newVerification.status = status;
-    globals.newVerification.storePhone = "0987645321";
-    globals.newVerification.agentEmail = "vahinim@google.com";
+    globals.newVerification.storePhone = globals.store.phone;
+    globals.newVerification.agentEmail = globals.agent.AgentEmail;
 
     globals.newVerification.verificationCoordinates = new Coordinates();
     _setCurrentLocationCoordinates();
@@ -380,8 +395,14 @@ class _VerificationHomeViewState extends State<VerificationHomeView> {
                       ),
                       Expanded(
                           flex: 1,
-                          child: Text(
-                            _getFieldValue(name),
+                          child:Padding(
+                              padding: EdgeInsets.only(top: 5),
+                              child:Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Text(
+                                    _getFieldValue(name),
+                                  )
+                              )
                           )
                       )
                     ],
@@ -397,7 +418,7 @@ class _VerificationHomeViewState extends State<VerificationHomeView> {
             border: Border.all(
               color: Colors.grey,
             ),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(6),
           ),
         )
     );
@@ -419,11 +440,11 @@ class _VerificationHomeViewState extends State<VerificationHomeView> {
   String _getFieldValue(headerName name){
     switch(name){
       case headerName.merchant_details:
-        return globals.merchantName;
+        return globals.store.ownerName.getName();
       case headerName.business_details:
-        return globals.address;
+        return globals.store.storeAddress.getAddress();
       case headerName.business_phone:
-        return globals.phone;
+        return globals.store.phone;
     }
   }
 
@@ -540,12 +561,9 @@ class _VerificationHomeViewState extends State<VerificationHomeView> {
             ),
             FlatButton(
               child: Text('DELETE'),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => VerificationFailureView()));
-              },
+               onPressed: () {
+                 _returnToHome();
+               },
             ),
           ],
         );

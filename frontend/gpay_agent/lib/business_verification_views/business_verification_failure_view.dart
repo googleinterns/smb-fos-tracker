@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:agent_app/agent_views/welcome_agent.dart';
 
 ///Displays Verification failure page.
 class VerificationFailureView extends StatefulWidget {
@@ -15,6 +16,12 @@ class _VerificationFailureViewState extends State<VerificationFailureView> {
         backgroundColor: Colors.white,
         elevation: 0.0,
         bottomOpacity: 0.0,
+        leading: IconButton(
+          icon: Icon(Icons.home,color: Colors.black,),
+          onPressed: () {
+            _returnToHome();
+          },
+        ),
       ),
       body: OrientationBuilder(
           builder: (context, orientation){
@@ -27,6 +34,12 @@ class _VerificationFailureViewState extends State<VerificationFailureView> {
           }
       )
     );
+  }
+
+  /// Returns to Home.
+  void _returnToHome(){
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => WelcomeAgent()));
   }
 
   /// Builds failure landscape view.

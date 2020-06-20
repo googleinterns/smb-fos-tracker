@@ -1,9 +1,9 @@
 import 'package:agent_app/agent_datamodels/text_widget.dart';
+import 'package:agent_app/business_verification_views/business_verification_view.dart';
 import 'package:agent_app/custom_widgets/personal_details_textbox.dart';
 import 'package:agent_app/custom_widgets/app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:agent_app/business_verification_views/business_registration_details_view.dart';
-import 'package:agent_app/agent_datamodels/globals.dart' as globals;
+import 'package:agent_app/globals.dart' as globals;
 
 /// Builds UI if store searched for is not found in database.
 class MerchantNotFound extends StatelessWidget {
@@ -43,10 +43,11 @@ class MerchantNotFound extends StatelessWidget {
 }
 
 /// Builds UI if store searched for is found in database.
+
 class MerchantFound extends StatelessWidget {
   MerchantFound({this.name});
 
-  String name;
+  String name = globals.store.ownerName.getName();
   int milliseconds;
 
   @override
@@ -73,7 +74,7 @@ class MerchantFound extends StatelessWidget {
           ),
           PersonalDetailsTextBox(
             title: "Store Phone",
-            value: "9999999999",
+            value: globals.store.phone,
             icon: Icon(Icons.phone),
           ),
           SizedBox(
@@ -95,7 +96,7 @@ class MerchantFound extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MerchantHomeView(),
+                    builder: (context) => VerificationHomeView(),
                   ),
                 );
               },

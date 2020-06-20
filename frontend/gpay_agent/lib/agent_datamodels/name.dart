@@ -4,8 +4,13 @@ class Name {
   String midName;
   String lastName;
 
-  Name(this.firstName, this.midName, this.lastName);
+  Name(String first, String mid, String last){
+    this.firstName = first;
+    this.midName = mid;
+    this.lastName = last;
+  }
 
+  /// Creates new Name object from json string.
   factory Name.fromJson(Map<String, dynamic> json) {
     return Name(
       json['firstName'] as String,
@@ -19,4 +24,8 @@ class Name {
         'midName': midName,
         'lastName': lastName,
       };
+
+  String getName(){
+    return firstName+" "+midName + " "+ lastName;
+  }
 }

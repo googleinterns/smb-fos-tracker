@@ -5,6 +5,7 @@ import 'package:flutter/painting.dart';
 /// Defines a theme text widget for app.
 /// Sets default font size to 20 and distance from text
 /// container edges to 8 pixels.
+
 class TextWidget extends StatelessWidget {
   TextWidget({this.name, this.color});
 
