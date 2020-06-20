@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fos_tracker/menu.dart';
+
+import 'charts_views/select_time_span.dart';
+import 'charts_views/verification_analysis_region_wise.dart';
+import 'charts_views/verification_analysis_time_wise.dart';
 
 void main() {
   runApp(FosTracker());
@@ -17,7 +20,7 @@ class FosTracker extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MenuView(),
+      home: SelectTime(),
     );
   }
 }
