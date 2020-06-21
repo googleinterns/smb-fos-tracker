@@ -1,19 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-/// Creates custom app bar for agent application.
-/// It has back button on the left, agent name in the centre and settings
-/// option with option to sign out on the right
+/// Creates custom app bar for views containing bar chart.
+/// It has back button on the left and title in the centre.
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  String appBarTitle;
-  Color appBarColor;
+  final String appBarTitle;
+  final Color appBarColor;
   @override
   final Size preferredSize = Size.fromHeight(60);
 
-  CustomAppBar(String appBarTitle, Color appBarColor) {
-    this.appBarTitle = appBarTitle;
-    this.appBarColor = appBarColor;
-  }
+  CustomAppBar({this.appBarTitle, this.appBarColor});
 
   @override
   Widget build(BuildContext context) {
@@ -33,28 +29,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           Navigator.pop(context);
         },
       ),
-      actions: <Widget>[
-        PopupMenuButton<String>(
-          onSelected: handleClick,
-          itemBuilder: (BuildContext context) {
-            return {'Filter'}.map((String choice) {
-              return PopupMenuItem<String>(
-                value: choice,
-                child: Text(choice),
-              );
-            }).toList();
-          },
-        ),
-      ],
     );
-  }
-}
-
-void handleClick(String value) {
-  switch (value) {
-    case 'Filter':
-      {
-        // TODO: Sign out agent and go to login page
-      }
   }
 }

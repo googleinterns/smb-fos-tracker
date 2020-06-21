@@ -2,7 +2,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/cupertino.dart';
 
 
-// Class to show features of bar in bar chart
+// Class to show features of each particular bar in bar chart
 class StatusSeries {
   final String status;
   final int merchantNumber;

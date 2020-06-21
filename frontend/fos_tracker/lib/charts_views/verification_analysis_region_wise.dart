@@ -131,7 +131,7 @@ class _RegionalAnalysisState extends State<RegionalAnalysis> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(widget.title, Colors.blue),
+      appBar: CustomAppBar(appBarTitle: widget.title, appBarColor: Colors.blue),
       body: SlidingUpPanel(
         // Panel shows the details in the expanded view of slide up bar.
         // It contains a form for selecting region whose verification analysis is needed.
@@ -238,9 +238,13 @@ class _RegionalAnalysisState extends State<RegionalAnalysis> {
         collapsed: Container(
           color: Colors.blueGrey,
           child: Center(
-            child: Text(
-              " ^ " + regionCategory + " : " + regionValue + " ^ ",
-              style: TextStyle(color: Colors.white, fontSize: 30),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.keyboard_arrow_up),
+                Text(regionCategory + " : " + regionValue),
+                Icon(Icons.keyboard_arrow_up)
+              ],
             ),
           ),
         ),
@@ -260,21 +264,21 @@ class _RegionalAnalysisState extends State<RegionalAnalysis> {
               Container(
                 child: _loading
                     ? Container(
-                  height: 400,
-                  child: new Center(
-                    child: new SizedBox(
-                      height: 50.0,
-                      width: 50.0,
-                      child: new CircularProgressIndicator(
-                        value: null,
-                        strokeWidth: 7.0,
-                      ),
-                    ),
-                  ),
-                )
+                        height: 400,
+                        child: new Center(
+                          child: new SizedBox(
+                            height: 50.0,
+                            width: 50.0,
+                            child: new CircularProgressIndicator(
+                              value: null,
+                              strokeWidth: 7.0,
+                            ),
+                          ),
+                        ),
+                      )
                     : Chart(
-                  data: data,
-                ),
+                        data: data,
+                      ),
               ),
             ],
           ),

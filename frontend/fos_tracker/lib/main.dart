@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'charts_views/select_time_span.dart';
-import 'charts_views/verification_analysis_region_wise.dart';
-import 'charts_views/verification_analysis_time_wise.dart';
+import 'menu.dart';
 
 void main() {
   runApp(FosTracker());
 }
 
-/// Class for the root stateless widget of application
-
+/// Class for the root stateless widget of application.
+/// It calls the main menu view.
 class FosTracker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -20,7 +18,7 @@ class FosTracker extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SelectTime(),
+      home: MenuView(),
     );
   }
 }
