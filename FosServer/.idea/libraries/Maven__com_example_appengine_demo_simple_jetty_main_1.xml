@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.example.appengine.demo:simple-jetty-main:1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/example/appengine/demo/simple-jetty-main/1/simple-jetty-main-1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/example/appengine/demo/simple-jetty-main/1/simple-jetty-main-1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/example/appengine/demo/simple-jetty-main/1/simple-jetty-main-1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
