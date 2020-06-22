@@ -19,10 +19,19 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23cdae15-6d59-4e59-97df-6044140605ba" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/fos_tracker/lib/charts_views/verification_analysis_week_wise.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/fos_tracker/lib/data_models/stores_with_time.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/fos_tracker/lib/time_functions/get_current_week.dart" afterDir="false" />
+    <list default="true" id="23cdae15-6d59-4e59-97df-6044140605ba" name="Default Changelist" comment="Made region wise tracking case insensitive. Delhi is treated as dElHi">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FosServer/src/main/java/com/example/fostracker/servlets/FosTrackerServlet/GetNumberOfStoresPerStatusByRegion.java" beforeDir="false" afterPath="$PROJECT_DIR$/FosServer/src/main/java/com/example/fostracker/servlets/FosTrackerServlet/GetNumberOfStoresPerStatusByRegion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FosServer/target/appengine-staging/helloworld.war" beforeDir="false" afterPath="$PROJECT_DIR$/FosServer/target/appengine-staging/helloworld.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FosServer/target/classes/com/example/fostracker/servlets/FosTrackerServlet/GetNumberOfStoresPerStatusByRegion$RegionCategoryValue.class" beforeDir="false" afterPath="$PROJECT_DIR$/FosServer/target/classes/com/example/fostracker/servlets/FosTrackerServlet/GetNumberOfStoresPerStatusByRegion$RegionCategoryValue.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FosServer/target/classes/com/example/fostracker/servlets/FosTrackerServlet/GetNumberOfStoresPerStatusByRegion.class" beforeDir="false" afterPath="$PROJECT_DIR$/FosServer/target/classes/com/example/fostracker/servlets/FosTrackerServlet/GetNumberOfStoresPerStatusByRegion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FosServer/target/helloworld.war" beforeDir="false" afterPath="$PROJECT_DIR$/FosServer/target/helloworld.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FosServer/target/helloworld/WEB-INF/classes/com/example/fostracker/servlets/FosTrackerServlet/GetNumberOfStoresPerStatusByRegion$RegionCategoryValue.class" beforeDir="false" afterPath="$PROJECT_DIR$/FosServer/target/helloworld/WEB-INF/classes/com/example/fostracker/servlets/FosTrackerServlet/GetNumberOfStoresPerStatusByRegion$RegionCategoryValue.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FosServer/target/helloworld/WEB-INF/classes/com/example/fostracker/servlets/FosTrackerServlet/GetNumberOfStoresPerStatusByRegion.class" beforeDir="false" afterPath="$PROJECT_DIR$/FosServer/target/helloworld/WEB-INF/classes/com/example/fostracker/servlets/FosTrackerServlet/GetNumberOfStoresPerStatusByRegion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FosServer/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/FosServer/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FosServer/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/FosServer/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FosServer/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/FosServer/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +58,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/Android/Sdk" />
     <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend/fos_tracker" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="flutter.settings" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
@@ -77,6 +86,10 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Made region wise tracking case insensitive. Delhi is treated as dElHi" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made region wise tracking case insensitive. Delhi is treated as dElHi" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1084" y="627" width="894" height="444" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1592460672265">
