@@ -49,7 +49,7 @@ class _MainViewState extends State<MainView> {
 
   void getAgentLocations() async {
     var result =
-        await http.get("https://fos-tracker-278709.an.r.appspot.com/agents");
+    await http.get("https://fos-tracker-278709.an.r.appspot.com/agents");
 
     if (result.statusCode == 200) {
       LineSplitter lineSplitter = new LineSplitter();
@@ -89,21 +89,19 @@ class _MainViewState extends State<MainView> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => MerchantPage(
+                                            builder: (context) =>
+                                                MerchantPage(
                                                   storePhone: store.storePhone,
                                                 )));
                                   },
                                   icon: store.status == 'grey'
-                                      ? BitmapDescriptor.fromAsset(
-                                          'images/m_grey.png')
+                                      ? BitmapDescriptor.fromAsset('images/m_grey.png')
                                       : (store.status == 'green'
-                                          ? BitmapDescriptor.fromAsset(
-                                              'images/m_green.png')
-                                          : (store.status == 'yellow'
-                                              ? BitmapDescriptor.fromAsset(
-                                                  'images/m_yellow.png')
-                                              : BitmapDescriptor.fromAsset(
-                                                  'images/m_red.png')))),
+                                      ? BitmapDescriptor.fromAsset('images/m_green.png')
+                                      : (store.status == 'yellow' ? BitmapDescriptor.fromAsset(
+                                      'images/m_yellow.png') : BitmapDescriptor.fromAsset(
+                                      'images/m_red.png')))
+                              ),
                             );
                           });
                         }
@@ -114,7 +112,8 @@ class _MainViewState extends State<MainView> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AgentPage(
+                            builder: (context) =>
+                                AgentPage(
                                   agentEmail: agent.email,
                                 )));
                   },
@@ -146,19 +145,19 @@ class _MainViewState extends State<MainView> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => MerchantPage(
+                            builder: (context) =>
+                                MerchantPage(
                                   storePhone: store.storePhone,
                                 )));
                   },
                   icon: store.status == 'grey'
                       ? BitmapDescriptor.fromAsset('images/m_grey.png')
                       : (store.status == 'green'
-                          ? BitmapDescriptor.fromAsset('images/m_green.png')
-                          : (store.status == 'yellow'
-                              ? BitmapDescriptor.fromAsset(
-                                  'images/m_yellow.png')
-                              : BitmapDescriptor.fromAsset(
-                                  'images/m_red.png')))),
+                      ? BitmapDescriptor.fromAsset('images/m_green.png')
+                      : (store.status == 'yellow' ? BitmapDescriptor.fromAsset(
+                      'images/m_yellow.png') : BitmapDescriptor.fromAsset(
+                      'images/m_red.png')))
+              ),
             );
           });
         }
@@ -172,7 +171,7 @@ class _MainViewState extends State<MainView> {
     });
     List<Agent> newAgents = [];
     var result =
-        await http.get("https://fos-tracker-278709.an.r.appspot.com/agents");
+    await http.get("https://fos-tracker-278709.an.r.appspot.com/agents");
     if (result.statusCode == 200) {
       LineSplitter lineSplitter = new LineSplitter();
       List<String> lines = lineSplitter.convert(result.body);
@@ -215,20 +214,21 @@ class _MainViewState extends State<MainView> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => MerchantPage(
+                                      builder: (context) =>
+                                          MerchantPage(
                                             storePhone: store.storePhone,
                                           )));
                             },
                             icon: store.status == 'grey'
                                 ? BitmapDescriptor.fromAsset(
-                                    'images/m_grey.png')
+                                'images/m_grey.png')
                                 : (store.status == 'green'
-                                    ? BitmapDescriptor.fromAsset(
-                                        'images/m_green.png')
-                                    : BitmapDescriptor.fromAsset(
-                                        'images/m_red.png'))
+                                ? BitmapDescriptor.fromAsset(
+                                'images/m_green.png')
+                                : BitmapDescriptor.fromAsset(
+                                'images/m_red.png'))
 //                              )
-                            ),
+                        ),
                       );
                     });
                   }
@@ -239,7 +239,8 @@ class _MainViewState extends State<MainView> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => AgentPage(
+                      builder: (context) =>
+                          AgentPage(
                             agentEmail: x.email,
                           )));
             },
@@ -272,7 +273,7 @@ class _MainViewState extends State<MainView> {
               GoogleMapController contr = await controller.future;
               final query = pincode.toString();
               var addresses =
-                  await Geocoder.local.findAddressesFromQuery(query);
+              await Geocoder.local.findAddressesFromQuery(query);
               var first = addresses.first;
               setState(() {
                 contr.animateCamera(CameraUpdate.newCameraPosition(
@@ -322,37 +323,40 @@ class _MainViewState extends State<MainView> {
             agentView
                 ? SizedBox()
                 : IconButton(
-                    icon: Icon(Icons.refresh),
-                    onPressed: getMerchantLocations,
-                  ),
+              icon: Icon(Icons.refresh),
+              onPressed: getMerchantLocations,
+            ),
             agentView
                 ? SizedBox()
                 : FlatButton(
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          "Pincode ",
-                          softWrap: true,
-                          style: TextStyle(color: Colors.white, fontSize: 12),
-                        ),
-                        Icon(
-                          Icons.search,
-                          color: Colors.white,
-                          size: 12,
-                        )
-                      ],
-                    ),
-                    onPressed: () async {
-                      showPincodeDialog();
-                    },
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    "Pincode ",
+                    softWrap: true,
+                    style: TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                  Icon(
+                    Icons.search,
+                    color: Colors.white,
+                    size: 12,
                   )
+                ],
+              ),
+              onPressed: () async {
+                showPincodeDialog();
+              },
+            )
           ],
         ),
         drawer: Drawer(
           child: ListView(
             children: <Widget>[
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.05,
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.05,
               ),
               ListTile(
                 title: Text("Agent View"),
@@ -378,41 +382,54 @@ class _MainViewState extends State<MainView> {
         body: (globals.startPosition == null)
             ? Center(child: CircularProgressIndicator())
             : GoogleMap(
-                mapType: MapType.normal,
-                initialCameraPosition: CameraPosition(
-                  target: globals.startPosition,
-                  zoom: 14.4746,
-                ),
-                onMapCreated: _onMapCreated,
-                zoomGesturesEnabled: true,
-                myLocationEnabled: true,
-                compassEnabled: true,
-                markers:
-                    agentView ? globals.agentMarkers : globals.merchantMarkers,
-              ),
-        bottomNavigationBar: !agentView
-            ? BottomNavigationBar(
-                items: [
-                  new BottomNavigationBarItem(
-                      icon: Icon(
-                        Icons.brightness_1,
-                        color: Colors.red,
-                      ),
-                      title: Text(
-                        "failed",
-                      )),
-                  new BottomNavigationBarItem(
-                      icon: Icon(Icons.brightness_1, color: Colors.grey),
-                      title: Text("incomplete")),
-                  new BottomNavigationBarItem(
-                      icon: Icon(Icons.brightness_1, color: Colors.lightGreen),
-                      title: Text("successful"))
-                ],
-                selectedLabelStyle: TextStyle(color: Colors.black),
-                selectedItemColor: Colors.black,
-                unselectedLabelStyle: TextStyle(color: Colors.black),
-                unselectedItemColor: Colors.black,
-              )
+          mapType: MapType.normal,
+          initialCameraPosition: CameraPosition(
+            target: globals.startPosition,
+            zoom: 14.4746,
+          ),
+          onMapCreated: _onMapCreated,
+          zoomGesturesEnabled: true,
+          myLocationEnabled: true,
+          compassEnabled: true,
+          markers:
+          agentView ? globals.agentMarkers : globals.merchantMarkers,
+        ),
+        bottomNavigationBar: !agentView ?
+    BottomAppBar(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget> [
+            Icon(Icons.brightness_1, color: Colors.grey,),
+              Text("Incomplete"),
+            ]
+          ),
+          Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget> [
+                Icon(Icons.brightness_1, color: Colors.yellow,),
+                Text("Revisit needed"),
+              ]
+          ),
+          Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget> [
+                Icon(Icons.brightness_1, color: Colors.red,),
+                Text("Failed"),
+              ]
+          ),
+          Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget> [
+                Icon(Icons.brightness_1, color: Colors.green,),
+                Text("Successful"),
+              ]
+          )
+        ],
+      ),
+    )
             : null);
   }
 }

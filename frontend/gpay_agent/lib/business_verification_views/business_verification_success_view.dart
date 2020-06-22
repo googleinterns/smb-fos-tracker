@@ -72,7 +72,7 @@ class _VerificationSuccessViewState extends State<VerificationSuccessView> {
 
   /// Builds success portrait view.
   ///
-  /// Contains gif and message in a row.
+  /// Contains gif and message in a column.
   Widget _buildSuccessPortraitView(){
     return  Column(
       children: <Widget>[

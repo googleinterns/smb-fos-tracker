@@ -42,7 +42,6 @@ class Store {
 
   /// Fetches store from the spanner database.
   static Future<Null> fetchStore(String phone) async {
-    print('started' + phone);
     var response = await http.post(
         "https://fos-tracker-278709.an.r.appspot.com/store/phone",
         body: jsonEncode(<String, String> {"storePhone": phone}));

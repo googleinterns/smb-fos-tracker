@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:agent_app/agent_views/welcome_agent.dart';
 
-///Displays Verification failure page.
+/// Displays Verification failure page.
 class VerificationFailureView extends StatefulWidget {
   _VerificationFailureViewState createState() =>
       _VerificationFailureViewState();

@@ -70,6 +70,18 @@ public class Store {
     }
 
     /**
+     * @param storePhone              - the store phone number that was verified
+     * @param storeCoordinates        - the location the store
+     * @param verificationStatus      - whether the verification was successful/unsuccessful/incomplete
+     */
+    public Store(String storePhone, Coordinates storeCoordinates, int verificationStatus, String storeName) {
+        this.phone = storePhone;
+        this.coordinates = storeCoordinates;
+        this.verificationStatus = getStoreVerificationString(verificationStatus);
+        this.storeName  = storeName;
+    }
+
+    /**
      * If store verification is successful then database table stores "green" String.
      * else if merchant is not registered then database table stores "grey" String
      * else if store verification is  unsuccessful then database table stores "red" String

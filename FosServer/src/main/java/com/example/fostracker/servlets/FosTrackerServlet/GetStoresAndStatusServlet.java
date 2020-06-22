@@ -33,7 +33,7 @@ import com.google.cloud.spanner.ResultSet;
 import com.example.fostracker.servlets.VerificationServlet.VerificationDatabaseHelper;
 
 /**
- * Prints the store phone and store status in verification table in JSON format.
+ * Prints the store phone, name, coordinates and status in verification table in JSON format.
  * <p>
  * This Servlet converts the ResultSet into JSON object and prints to the response on @WebServlet(value = "/verification").
  */
@@ -62,7 +62,7 @@ public class GetStoresAndStatusServlet extends HttpServlet {
         PrintWriter output;
         output = response.getWriter();
 
-        // storeAndCoordinateDataIterator is a StoreAndStatus object that is used to store the row we are iterating.
+        // storeAndCoordinateDataIterator is a Store object that is used to store the row we are iterating.
         Store storeAndCoordinateDataIterator;
         // storeAndCoordinateDataIteratorString stores the storeAndCoordinateDataIterator object as json String.
         String storeAndCoordinateDataIteratorString;
@@ -79,6 +79,8 @@ public class GetStoresAndStatusServlet extends HttpServlet {
                     storeAndCoordinateData.getColumnIndex(StoreDatabaseHelper.COLUMN_STORE_LATITUDE);
             int columnStoreLongitudeIndex =
                     storeAndCoordinateData.getColumnIndex(StoreDatabaseHelper.COLUMN_STORE_LONGITUDE);
+            int columnStoreNameIndex =
+                    storeAndCoordinateData.getColumnIndex(StoreDatabaseHelper.COLUMN_STORE_NAME);
 
             // Loop through all rows and stores the row data in verificationDataIterator. Converts verificationDataIterator into
             // json object and prints to the screen.
@@ -92,7 +94,8 @@ public class GetStoresAndStatusServlet extends HttpServlet {
                 storeAndCoordinateDataIterator = new Store(storeAndCoordinateData.getString(columnStorePhoneIndex),
                         new Coordinates(storeAndCoordinateData.getDouble(columnStoreLatitudeIndex),
                                 storeAndCoordinateData.getDouble(columnStoreLongitudeIndex)),
-                        status_int
+                        status_int,
+                        storeAndCoordinateData.getString(columnStoreNameIndex)
                 );
                 storeAndCoordinateDataIteratorString = this.gson.toJson(storeAndCoordinateDataIterator);
                 output.println(storeAndCoordinateDataIteratorString);

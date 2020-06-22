@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 package com.example.fostracker.servlets.FosTrackerServlet;
 
 import com.example.fostracker.models.Coordinates;

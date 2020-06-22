@@ -156,7 +156,7 @@ public class StoreDatabaseHelper {
     }
 
     /**
-     * Queries the store table for store coordinates and store phone.
+     * Queries the store table for store coordinates, store name and store phone.
      *
      * @return ResultSet object that refers to corresponding row
      */
@@ -167,7 +167,7 @@ public class StoreDatabaseHelper {
                 Statement.newBuilder(
                         "SELECT "
                                 + COLUMN_STORE_LATITUDE + ", " + COLUMN_STORE_LONGITUDE
-                                + ", " + COLUMN_STORE_PHONE
+                                + ", " + COLUMN_STORE_PHONE+ ", " + COLUMN_STORE_NAME
                                 + " FROM " + TABLE_NAME).build();
         // Tries to query if it fails returns null.
         try {

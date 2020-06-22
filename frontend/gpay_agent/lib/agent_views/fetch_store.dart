@@ -223,12 +223,13 @@ class FetchStoreState{
     String qrcode = await scanner.scan();
     //Use QR code to get store, if store is registered, pass merchant name found, else not found
     Navigator.pop(context);
-    if (qrcode == "73") {
-      //73 is a hard coded as a valid store QR code currently
+    globals.isStorePresent  = false;
+    await Store.fetchStore(qrcode);
+    if (globals.isStorePresent) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => MerchantFound(name: "Alice Peterson"),
+          builder: (context) => MerchantFound(name: globals.store.ownerName.getName()),
         ),
       );
     } else {

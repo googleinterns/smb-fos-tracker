@@ -1,6 +1,7 @@
 /// Global library for storing details that remain common through all views
 /// of application. [googleSignIn] is google account details of agent signed
 /// in. [agent] is the agent registered with [googleSignIn.email]
+/// [newVerification] is verification object that store present verification that is sent
 
 library gpay_agent.globals;
 

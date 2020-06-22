@@ -1,3 +1,4 @@
+=======
 /*
  * Copyright 2019 Google LLC
  *
@@ -33,13 +34,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Prints the Store details with status based on given pincode from Stores table in JSON format.
+ * Prints the Store details with status verified by particular agent from Stores table in JSON format.
  * <p>
- * This Servlet converts the ResultSet into JSON object and prints to the response on @WebServlet(value = "/stores/status/pincode").
+ * This Servlet converts the ResultSet into JSON object and prints to the response on @WebServlet(value = "/agent/store/status").
  */
 
-@WebServlet(value = "/stores/status/pincode")
-public class GetStoresAndStatusByPincodeServlet extends HttpServlet {
+@WebServlet(value = "/agent/stores/status/")
+public class GetStoresVerifiedByAgentServlet extends HttpServlet {
 
     // Gson object that is used to convert Strings into JSON objects
     private Gson gson = new Gson();
@@ -47,16 +48,17 @@ public class GetStoresAndStatusByPincodeServlet extends HttpServlet {
     /**
      * HTTP Get method prints the query as response.
      *
-     * @param verificationDetailsRequest is GET request.
-     * @param response                   is HttpServletResponse object that is used to write the response.
+     * @param agentVerifiedStoreDetailsRequest  GET request.
+     * @param response                    HttpServletResponse object that is used to write the response.
      * @throws ServletException
      * @throws IOException
      */
     @Override
-    protected void doPost(HttpServletRequest verificationDetailsRequest, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest agentVerifiedStoreDetailsRequest, HttpServletResponse response)
+            throws ServletException, IOException {
 
         // Reads the json String using POST request.
-        String json = verificationDetailsRequest.getReader().readLine();
+        String json = agentVerifiedStoreDetailsRequest.getReader().readLine();
 
         // sets the response to json format.
         response.setContentType("application/json");
@@ -74,48 +76,39 @@ public class GetStoresAndStatusByPincodeServlet extends HttpServlet {
             // Convert json string to json object to parse data.
             JsonObject jsonObj = new Gson().fromJson(json, JsonObject.class);
 
-            // Get pincode from the JSON object.
-            String storePincode = jsonObj.get("storePincode").getAsString();
+            // Get email from the JSON object.
+            String agentEmail = jsonObj.get("agentEmail").getAsString();
 
-            // storeAndCoordinateDataIterator is a Store object that is used to store the row we are iterating.
-            Store storeAndCoordinateDataIterator;
-            // storeAndCoordinateDataIteratorString stores the storeAndCoordinateDataIterator object as json String.
-            String storeAndCoordinateDataIteratorString;
+            // storeAndStatusDataIterator is a Store object that is used to store the row we are iterating
+            Store storeAndStatusDataIterator;
+            // storeAndStatusDataIteratorString stores the storeAndCoordinateDataIterator object as json String.
+            String storeAndStatusDataIteratorString;
 
 
-            // Querying the database table and storing in storeAndCoordinateData.
-            ResultSet storeAndCoordinateData = StoreDatabaseHelper.queryStoresUsingPincode(storePincode);
+            // Querying the database table for stores verified by the agent email and storing in the storeAndStatusData.
+            ResultSet storeAndStatusData = VerificationDatabaseHelper.queryStoreAndStatusDataByEmail(agentEmail);
 
             // If storeAndStatusData is not empty then prints all the rows else prints "No data exists".
-            if (storeAndCoordinateData.next()) {
-                // stores the indexes of columns in storeAndCoordinateData ( ResultSet object ).
+            if (storeAndStatusData.next()) {
+                // stores the indexes of columns in storeAndStatusData ( ResultSet object ).
                 int columnStorePhoneIndex =
-                        storeAndCoordinateData.getColumnIndex(StoreDatabaseHelper.COLUMN_STORE_PHONE);
-                int columnStoreLatitudeIndex =
-                        storeAndCoordinateData.getColumnIndex(StoreDatabaseHelper.COLUMN_STORE_LONGITUDE);
-                int columnStoreLongitudeIndex =
-                        storeAndCoordinateData.getColumnIndex(StoreDatabaseHelper.COLUMN_STORE_LATITUDE);
-
-                // Loop through all rows and stores the row data in storeAndCoordinateDataIterator. Converts storeAndCoordinateDataIterator into
+                        storeAndStatusData.getColumnIndex(VerificationDatabaseHelper.COLUMN_STORE_PHONE);
+                int columnStoreStatusIndex =
+                        storeAndStatusData.getColumnIndex(VerificationDatabaseHelper.COLUMN_VERIFICATION_STATUS);
+                // Loop through all rows and stores the row data in storeAndStatusDataIterator. Converts storeAndStatusDataIterator into
                 // json object and prints to the screen.
                 do {
-                    String status = VerificationDatabaseHelper
-                            .queryStatusUsingStorePhone(storeAndCoordinateData.getString(columnStorePhoneIndex));
-                    int status_int = Verification.NOT_VERIFIED_INT;
-                    if (status != null) {
-                        status_int = getStatusInt(status);
-                    }
-                    storeAndCoordinateDataIterator = new Store(storeAndCoordinateData.getString(columnStorePhoneIndex),
-                            new Coordinates(storeAndCoordinateData.getDouble(columnStoreLatitudeIndex),
-                                    storeAndCoordinateData.getDouble(columnStoreLongitudeIndex)),
-                            status_int
-                    );
-                    storeAndCoordinateDataIteratorString = this.gson.toJson(storeAndCoordinateDataIterator);
-                    output.println(storeAndCoordinateDataIteratorString);
-                } while (storeAndCoordinateData.next());
-                storeAndCoordinateData.close();
-//                response.setStatus(200);
-             } else {
+                  
+                    storeAndStatusDataIterator = new Store(storeAndStatusData.getString(columnStorePhoneIndex),
+                            StoreDatabaseHelper.queryStoreCoordinatesUsingStorePhone(
+                                    storeAndStatusData.getString(columnStorePhoneIndex)),
+                            getStatusInt(storeAndStatusData.getString(columnStoreStatusIndex)
+                    ));
+                    storeAndStatusDataIteratorString = this.gson.toJson(storeAndStatusDataIterator);
+                    output.println(storeAndStatusDataIteratorString);
+                } while (storeAndStatusData.next());
+                storeAndStatusData.close();
+            } else {
                 response.setStatus(403);
                 output.print("No data exists");
                 output.flush();
@@ -126,14 +119,12 @@ public class GetStoresAndStatusByPincodeServlet extends HttpServlet {
         }
     }
 
-
     /**
      * Converts the verification status into its corresponding integer.
      *
-     * @param status is status of verification.
+     * @param status  status of verification.
      * @return returns its corresponding integer.
      */
-
     private static int getStatusInt(String status) {
         switch (status) {
             case Verification.VERIFICATION_SUCCESSFUL:
@@ -148,6 +139,4 @@ public class GetStoresAndStatusByPincodeServlet extends HttpServlet {
                 return Verification.NOT_VERIFIED_INT;
         }
     }
-
-
 }
